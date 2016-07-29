@@ -1,6 +1,39 @@
-<% content_for :head %>
-    <title>@title - monolist</title>
+<% content_for :head do %>
+    <title><%= @title %>- monolist</title>
     <meta name="description" content="<%= @desc %>">
 <% end %>
-<div class="ranking items">
+<div class="container">
+    <div class="container-inner inner-default clearfix">
+        <% @items.each_with_index do |item, i| %>
+            <div class="item-box">
+                <div class="image">
+                    <div class="img-wrap">
+                        <% if item.large_image.present? %>
+                            <%= image_tag(item.large_image, alt: item.title) %>
+                        <% else %>
+                            <%= image_tag("no-image.png" , alt: item.title) %>
+                        <% end %>
+                    </div>
+                </div>
+                <div class="detail">
+                    <p class="title">
+                        <b><%= i + 1 %>位</b>
+                        <%= item.title %>
+                    </p>
+                </div>
+                <div class="action clearfix">
+                    <%= link_to "" , ownerships_path(item_code: item.item_code , type: "Want") ,
+                        :class => "btn-want btn btn-danger btn-sm want",
+                        :item_code => "want-#{item.item_code}",
+                        :remote => true,
+                        :method => :post %>
+                    <%= link_to "" , ownerships_path(item_code: item.item_code , type: "Have") ,
+                        :class => "btn-have btn btn-warning btn-sm have",
+                        :item_code => "have-#{item.item_code}",
+                        :remote => true,
+                        :method => :post %>
+                </div>
+            </div>
+        <% end %>
+    </div>
 </div>
