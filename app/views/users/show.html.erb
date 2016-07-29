@@ -1,3 +1,8 @@
+<% provide :title, @user.name %>
+<% content_for :head do %>
+  <meta name="description" content="<%= @user.name %>さんに関する情報です。">
+<% end %>
+
 <%= render 'profile' , user: @user %>
 
 
